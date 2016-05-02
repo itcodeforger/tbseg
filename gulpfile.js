@@ -19,7 +19,6 @@ gulp.task('build', plugins.sequence(
   'clear-all',
   'copy-html',
   'copy-bower-components',
-  'copy-components',
   'copy-modules',
   'copy-css',
   'copy-js'
@@ -30,7 +29,6 @@ gulp.task('build-dev-sequence', (callback) => {
     'clear-all',
     'copy-html',
     'copy-bower-components',
-    'copy-components',
     'copy-modules',
     'copy-css',
     'copy-js'
