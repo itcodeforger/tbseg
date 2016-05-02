@@ -10,8 +10,7 @@ module.exports = (gulp, options, plugins) => {
   });
 
   gulp.task('copy-html', () => {
-    return gulp.src(['./src/index.html'])
-      .pipe(plugins.flatten())
+    return gulp.src(['./src/**/*.html'])
       .pipe(gulp.dest('./app/'));
   });
 
@@ -26,7 +25,11 @@ module.exports = (gulp, options, plugins) => {
   });
 
   gulp.task('copy-modules', () => {
-    return gulp.src(['./src/modules/**/*'])
+    return gulp.src(['./src/modules/**/*.js'])
+      .pipe(plugins.babel({
+        compact: false,
+        presets: ['es2015']
+      }))
       .pipe(gulp.dest('./app/modules/'));
   });
 

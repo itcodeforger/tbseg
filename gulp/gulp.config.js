@@ -8,7 +8,7 @@ module.exports = {
     'package.json'
   ],
   gulpLoadPlugins: {
-    DEBUG: true,
+    DEBUG: false,
     pattern: ['gulp-*', 'gulp.*', 'del', 'babel-preset-es2015', 'karma*', 'jasmine-core', 'browserify', 'watchify'],
     rename: {'gulp-install': 'install', 'gulp-util': 'gutil'}
   }
