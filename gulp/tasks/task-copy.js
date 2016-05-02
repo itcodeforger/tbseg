@@ -34,7 +34,9 @@ module.exports = (gulp, options, plugins) => {
   });
 
   gulp.task('copy-css', () => {
-    return gulp.src(['./src/app.css'])
+    return gulp.src(['./src/scss/**/*.scss'])
+      .pipe(plugins.concat('app.scss'))
+      .pipe(plugins.sass({ importer: plugins.compassImporter }).on('error', plugins.sass.logError))
       .pipe(gulp.dest('./app/'));
   });
 

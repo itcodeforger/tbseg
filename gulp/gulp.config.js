@@ -9,7 +9,7 @@ module.exports = {
   ],
   gulpLoadPlugins: {
     DEBUG: false,
-    pattern: ['gulp-*', 'gulp.*', 'del', 'babel-preset-es2015', 'karma*', 'jasmine-core', 'browserify', 'watchify'],
+    pattern: ['gulp-*', 'gulp.*', 'del', 'babel-preset-es2015', 'karma*', 'jasmine-core', 'browserify', 'watchify', 'compass*'],
     rename: {'gulp-install': 'install', 'gulp-util': 'gutil'}
   }
 };
