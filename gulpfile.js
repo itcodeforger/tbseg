@@ -15,7 +15,6 @@ gulp.task('test', (done) => {
 });
 
 gulp.task('build', plugins.sequence(
-  'gulp-install',
   'clear-all',
   'copy-html',
   'copy-bower-components',
@@ -36,7 +35,6 @@ gulp.task('build-dev-sequence', (callback) => {
 });
 
 gulp.task('build-dev', plugins.sequence(
-  'gulp-install',
   'build-dev-sequence'
 ));
 
