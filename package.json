@@ -43,8 +43,5 @@
   "dependencies": {
     "in-publish": "^2.0.0",
     "node-sass": "^3.4.2"
-  },
-  "scripts": {
-    "start": "http-server -a localhost -p 80 -c-1"
   }
 }
