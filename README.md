@@ -17,18 +17,3 @@ folders in your project.
 
 * `node_modules` - contains the npm packages for the tools we need
 * `src/bower_components` - contains the angular framework files
-
-### Run the Application
-
-```
-npm start
-```
-Now browse to the app at `http://localhost:8000/app/index.html`.
-
-## Testing
-
-### Running Unit Tests
-
-```
-gulp test
-```
