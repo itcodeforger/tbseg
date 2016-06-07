@@ -12,4 +12,4 @@ fs.readFile('./app/index.html', function (err, html) {
     }).listen(8080);
 });
 
-console.log("listening on http://docker:8080")
+console.log("listening on port:8080")
