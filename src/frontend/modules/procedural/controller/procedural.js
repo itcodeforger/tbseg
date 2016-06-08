@@ -1,6 +1,3 @@
-/**
- * Created by vincent on 11.04.16.
- */
 'use strict';
 
 angular.module('myApp.procedural', ['ngRoute'])
@@ -26,6 +23,8 @@ angular.module('myApp.procedural', ['ngRoute'])
       drawGrid(canvasSize,boardResolution);
       drawMap(board);
     });
+    
+    // board functions
 
     function createMap (rows,cols) {
       let arr = [];
@@ -48,7 +47,6 @@ angular.module('myApp.procedural', ['ngRoute'])
     }
     
     function checkVicinity (x,y) {
-      console.log(x + " " + y);
       let counter = 0;
       for (let i = x - 1; i <= x + 1; i++) {
         for (let j = y - 1; j <= y + 1; j++) {
@@ -56,11 +54,41 @@ angular.module('myApp.procedural', ['ngRoute'])
             if (board[i][j] === 1) {
               counter++;
             }
+            searchForSeparatedFields(x,y);
           }
         }
       }
-      console.log("punkt: " + x + "," + y + " ma " + counter + " sąsiadów");
+      // console.log("punkt: " + x + "," + y + " ma " + counter + " sąsiadów");
     }
+    
+    // procedural fill functions:
+    
+    function searchForSeparatedFields (x,y) {
+      console.log(x + " " + y);
+      console.log(typeof(board[x][y-1]));
+      if (board[x][y-1] === 0 && board[x-1][y] === 0 && board[x+1][y] === 0 && board[x][y+1] &&) {
+        console.log(x + " " + y);
+        switch (randomIntFromInterval(0,3)) {
+          case 0:
+            board[x][y-1] = 1;
+            break;
+          case 1:
+            board[x-1][y] = 1;
+            break;
+          case 2:
+            board[x+1][y] = 1;
+            break;
+          case 3:
+            board[x][y+1] = 1;
+            break;
+          default:
+            board[x][y] = 1;
+            break;
+        }
+      }
+    }
+    
+    // draw functions:
 
     function drawGrid (size,resolution) {
       for (let i=0; i <= size; i = i + resolution){
@@ -86,6 +114,8 @@ angular.module('myApp.procedural', ['ngRoute'])
         }
       }
     }
+    
+    //math functions:
 
     function randomIntFromInterval(min,max) {
       return Math.floor(Math.random()*(max-min+1)+min);
