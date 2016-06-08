@@ -11,13 +11,13 @@ angular.module('myApp.procedural', ['ngRoute'])
     });
   }])
   .controller('proceduralCtrl', ['$scope', ($scope) => {
-    const boardSize = 5;
+    const boardSize = 10;
     const boardResolution = 20;
     const canvasSize = boardSize * boardResolution;
     const canvas = document.getElementById('tutorial');
     const ctx = canvas.getContext('2d');
     let board = createMap(boardSize,boardSize);
-    // checkBoard();
+    checkBoard();
 
     ctx.canvas.width = canvasSize;
     ctx.canvas.height = canvasSize;
@@ -27,33 +27,33 @@ angular.module('myApp.procedural', ['ngRoute'])
       drawMap(board);
     });
 
-    // function createMap (rows,cols) {
-    //   let arr = [];
-    //   for ( let i=0; i < rows; i++ ) {
-    //     arr.push([]);
-    //     arr[i].push( new Array(cols) );
-    //     for ( let j=0; j < cols; j++ ) {
-    //       arr[i][j] = randomIntFromInterval(0,1);
-    //     }
-    //   }
-    //   return arr;
-    // };
+    function createMap (rows,cols) {
+      let arr = [];
+      for ( let i=0; i < rows; i++ ) {
+        arr.push([]);
+        arr[i].push( new Array(cols) );
+        for ( let j=0; j < cols; j++ ) {
+          arr[i][j] = randomIntFromInterval(0,1);
+        }
+      }
+      return arr;
+    };
     
-    // function checkBoard () {
-    //   for ( let i = 0; i < boardSize; i++ ) {
-    //     for ( let j = 0; j < boardSize; j++ ) {
-    //       console.log(i + " " + j);
-    //       checkVicinity(i,j);
-    //     }
-    //   }
-    // }
+    function checkBoard () {
+      for ( let i = 0; i < boardSize; i++ ) {
+        for ( let j = 0; j < boardSize; j++ ) {
+          checkVicinity(i,j);
+        }
+      }
+    }
     
     function checkVicinity (x,y) {
+      console.log(x + " " + y);
       let counter = 0;
-      for (let i = x - 1; i = x + 1; i++) {
-        for (let j = y - 1; j = y + 1; j++) {
+      for (let i = x - 1; i <= x + 1; i++) {
+        for (let j = y - 1; j <= y + 1; j++) {
           if (i >= 0 && i < boardSize && j >= 0 && j < boardSize) {
-            if (board[i][j] == 1) {
+            if (board[i][j] === 1) {
               counter++;
             }
           }

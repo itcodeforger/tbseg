@@ -15,7 +15,7 @@ module.exports = (gulp, options, plugins) => {
   });
 
   gulp.task('copy-bower-components', () => {
-    return gulp.src(['./src/bower_components/**/*'])
+    return gulp.src(['./src/frontend/bower_components/**/*'])
       .pipe(gulp.dest('./app/public_html/bower_components/'));
   });
 
