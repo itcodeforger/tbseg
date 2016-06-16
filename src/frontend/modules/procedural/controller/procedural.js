@@ -14,7 +14,7 @@ angular.module('myApp.procedural', ['ngRoute'])
     const canvas = document.getElementById('tutorial');
     const ctx = canvas.getContext('2d');
     let board = createMap(boardSize,boardSize);
-    checkBoard();
+    
 
     ctx.canvas.width = canvasSize;
     ctx.canvas.height = canvasSize;
@@ -22,6 +22,7 @@ angular.module('myApp.procedural', ['ngRoute'])
     $scope.$on('$viewContentLoaded', function(){
       drawGrid(canvasSize,boardResolution);
       drawMap(board);
+      checkBoard();
     });
     
     // board functions
@@ -54,7 +55,7 @@ angular.module('myApp.procedural', ['ngRoute'])
             if (board[i][j] === 1) {
               counter++;
             }
-            searchForSeparatedFields(x,y);
+            searchForSeparatedTile(x,y);
           }
         }
       }
@@ -63,29 +64,59 @@ angular.module('myApp.procedural', ['ngRoute'])
     
     // procedural fill functions:
     
-    function searchForSeparatedFields (x,y) {
-      console.log(x + " " + y);
-      console.log(typeof(board[x][y-1]));
-      if (board[x][y-1] === 0 && board[x-1][y] === 0 && board[x+1][y] === 0 && board[x][y+1] &&) {
-        console.log(x + " " + y);
-        switch (randomIntFromInterval(0,3)) {
-          case 0:
-            board[x][y-1] = 1;
-            break;
-          case 1:
-            board[x-1][y] = 1;
-            break;
-          case 2:
-            board[x+1][y] = 1;
-            break;
-          case 3:
-            board[x][y+1] = 1;
-            break;
-          default:
-            board[x][y] = 1;
-            break;
+    function searchForSeparatedTile (x,y) {
+      let closestTile = [];
+      if (y - 1 >= 0) {
+        if (board[x][y-1] === 0) {
+          closestTile.push([x,y-1]);
         }
       }
+      if (x - 1 >= 0) {
+        if (board[x-1][y] === 0) {
+          closestTile.push([x-1,y]);
+        }
+      }
+      if (x + 1 < boardSize) {
+        if (board[x+1][y] === 0) {
+          closestTile.push([x+1,y]);
+        }
+      }
+      if (y + 1 < boardSize) {
+        if (board[x][y+1] === 0) {
+          closestTile.push([x,y+1]);
+        }
+      }
+      if (closestTile.length > 2) {
+        console.log('(' + x + ',' + y + '): ' + closestTile.length);
+        console.log(closestTile);
+        let selectedIndex = randomIntFromInterval(0,closestTile.length -1);
+        let i = closestTile[selectedIndex][0];
+        let j = closestTile[selectedIndex][1];
+        console.log('selected point to fill: (' + i + ',' + j + ')');
+        board[i][j] = 1;
+        drawArea(i * 20, j * 20)
+      }
+      
+      // if (board[x][y-1] === 0 && board[x-1][y] === 0 && board[x+1][y] === 0 && board[x][y+1] === ) {
+      //   console.log(x + " " + y);
+      //   switch (randomIntFromInterval(0,3)) {
+      //     case 0:
+      //       board[x][y-1] = 1;
+      //       break;
+      //     case 1:
+      //       board[x-1][y] = 1;
+      //       break;
+      //     case 2:
+      //       board[x+1][y] = 1;
+      //       break;
+      //     case 3:
+      //       board[x][y+1] = 1;
+      //       break;
+      //     default:
+      //       board[x][y] = 1;
+      //       break;
+      //   }
+      // }
     }
     
     // draw functions:
