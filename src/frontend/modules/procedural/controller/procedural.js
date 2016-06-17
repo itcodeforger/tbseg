@@ -15,17 +15,22 @@ angular.module('myApp.procedural', ['ngRoute'])
     const ctx = canvas.getContext('2d');
     let board = createMap(boardSize,boardSize);
     
-
     ctx.canvas.width = canvasSize;
     ctx.canvas.height = canvasSize;
 
-    $scope.$on('$viewContentLoaded', function(){
+    $scope.$on('$viewContentLoaded', () => {
       drawGrid(canvasSize,boardResolution);
       drawMap(board);
-      checkBoard();
     });
     
-    // board functions
+    $scope.checkBoard = () => {
+      console.log("inside checkBoard");
+      for ( let i = 0; i < boardSize; i++ ) {
+        for ( let j = 0; j < boardSize; j++ ) {
+          checkVicinity(i,j);
+        }
+      }
+    }
 
     function createMap (rows,cols) {
       let arr = [];
@@ -39,14 +44,6 @@ angular.module('myApp.procedural', ['ngRoute'])
       return arr;
     };
     
-    function checkBoard () {
-      for ( let i = 0; i < boardSize; i++ ) {
-        for ( let j = 0; j < boardSize; j++ ) {
-          checkVicinity(i,j);
-        }
-      }
-    }
-    
     function checkVicinity (x,y) {
       let counter = 0;
       for (let i = x - 1; i <= x + 1; i++) {
@@ -59,11 +56,8 @@ angular.module('myApp.procedural', ['ngRoute'])
           }
         }
       }
-      // console.log("punkt: " + x + "," + y + " ma " + counter + " sąsiadów");
     }
-    
-    // procedural fill functions:
-    
+
     function searchForSeparatedTile (x,y) {
       let closestTile = [];
       if (y - 1 >= 0) {
@@ -87,39 +81,13 @@ angular.module('myApp.procedural', ['ngRoute'])
         }
       }
       if (closestTile.length > 2) {
-        console.log('(' + x + ',' + y + '): ' + closestTile.length);
-        console.log(closestTile);
         let selectedIndex = randomIntFromInterval(0,closestTile.length -1);
         let i = closestTile[selectedIndex][0];
         let j = closestTile[selectedIndex][1];
-        console.log('selected point to fill: (' + i + ',' + j + ')');
         board[i][j] = 1;
         drawArea(i * 20, j * 20)
       }
-      
-      // if (board[x][y-1] === 0 && board[x-1][y] === 0 && board[x+1][y] === 0 && board[x][y+1] === ) {
-      //   console.log(x + " " + y);
-      //   switch (randomIntFromInterval(0,3)) {
-      //     case 0:
-      //       board[x][y-1] = 1;
-      //       break;
-      //     case 1:
-      //       board[x-1][y] = 1;
-      //       break;
-      //     case 2:
-      //       board[x+1][y] = 1;
-      //       break;
-      //     case 3:
-      //       board[x][y+1] = 1;
-      //       break;
-      //     default:
-      //       board[x][y] = 1;
-      //       break;
-      //   }
-      // }
     }
-    
-    // draw functions:
 
     function drawGrid (size,resolution) {
       for (let i=0; i <= size; i = i + resolution){
@@ -146,8 +114,6 @@ angular.module('myApp.procedural', ['ngRoute'])
       }
     }
     
-    //math functions:
-
     function randomIntFromInterval(min,max) {
       return Math.floor(Math.random()*(max-min+1)+min);
     }
