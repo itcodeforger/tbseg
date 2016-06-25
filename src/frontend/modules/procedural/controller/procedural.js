@@ -30,7 +30,18 @@ angular.module('myApp.procedural', ['ngRoute'])
           checkVicinity(i,j);
         }
       }
-    }
+    };
+
+    $scope.saveBoard = () => {
+      localStorage.setItem("board", JSON.stringify(board));
+    };
+
+    $scope.loadBoard = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      board = JSON.parse(localStorage.getItem("board"));
+      drawGrid(canvasSize,boardResolution);
+      drawMap(board);
+    };
 
     function createMap (rows,cols) {
       let arr = [];
