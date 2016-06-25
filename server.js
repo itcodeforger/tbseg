@@ -1,7 +1,7 @@
 var http = require('http'),
     fs = require('fs');
 
-fs.readFile('./app/index.html', function (err, html) {
+fs.readFile('./app/public_html/index.html', function (err, html) {
     if (err) {
         throw err;
     }
@@ -12,4 +12,4 @@ fs.readFile('./app/index.html', function (err, html) {
     }).listen(8080);
 });
 
-console.log("listening on port:8080")
+console.log("listening on http://localhost:8080")
