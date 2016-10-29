@@ -17,20 +17,18 @@ gulp.task('test', (done) => {
 gulp.task('build', plugins.sequence(
   'clear-all',
   'copy-html',
-  'copy-bower-components',
-  'copy-modules',
   'copy-css',
-  'copy-js'
+  'compile-library',
+  'compile-scripts'
 ));
 
 gulp.task('build-dev-sequence', (callback) => {
   plugins.sequence(
     'clear-all',
     'copy-html',
-    'copy-bower-components',
-    'copy-modules',
     'copy-css',
-    'copy-js'
+    'compile-library',
+    'compile-scripts'
   )(callback)
 });
 
