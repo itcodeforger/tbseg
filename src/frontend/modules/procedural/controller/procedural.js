@@ -42,7 +42,12 @@
           arr.push([]);
           arr[i].push( new Array(cols) );
           for ( let j=0; j < cols; j++ ) {
-            arr[i][j] = randomIntFromInterval(0,1);
+            if (i === 0 || j === 0 || i === rows - 1 || j === cols - 1) {
+              arr[i][j] = 0;
+            }
+            else {
+              arr[i][j] = randomIntFromInterval(0,1);
+            }
           }
         }
         return arr;
@@ -89,7 +94,7 @@
           let i = closestTile[selectedIndex][0];
           let j = closestTile[selectedIndex][1];
           board[i][j] = 1;
-          graph.drawArea(i * 20, j * 20)
+          graph.drawArea(i * config.boardResolution, j * config.boardResolution);
         }
       }
 
