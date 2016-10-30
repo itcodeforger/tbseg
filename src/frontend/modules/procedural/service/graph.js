@@ -30,6 +30,9 @@
     function drawArea(x, y) {
       ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
       ctx.fillRect (x, y, config.boardResolution, config.boardResolution);
+      ctx.fillStyle = "rgba(0, 0, 0, 1)";
+      ctx.font = "10px, Arial";
+      ctx.fillText( x/20 + ',' + y/20 ,x+2,y+12);
     }
 
     function drawMap(mapArray) {

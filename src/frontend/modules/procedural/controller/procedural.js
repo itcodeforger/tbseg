@@ -18,11 +18,14 @@
       });
 
       $scope.checkBoard = () => {
-        for ( let i = 0; i < config.boardSize; i++ ) {
-          for ( let j = 0; j < config.boardSize; j++ ) {
+        for ( let i = 1; i < config.boardSize - 1; i++ ) {
+          for ( let j = 1; j < config.boardSize - 1; j++ ) {
             checkVicinity(i,j);
           }
         }
+        graph.clearMap();
+        graph.drawGrid();
+        graph.drawMap(board);
       };
 
       $scope.saveBoard = () => {
@@ -32,6 +35,13 @@
       $scope.loadBoard = () => {
         graph.clearMap();
         board = JSON.parse(localStorage.getItem("board"));
+        graph.drawGrid();
+        graph.drawMap(board);
+      };
+
+      $scope.newBoard = () => {
+        graph.clearMap();
+        board = createMap(config.boardSize,config.boardSize);
         graph.drawGrid();
         graph.drawMap(board);
       };
@@ -51,50 +61,33 @@
           }
         }
         return arr;
-      };
+      }
 
       function checkVicinity (x,y) {
         let counter = 0;
-        for (let i = x - 1; i <= x + 1; i++) {
-          for (let j = y - 1; j <= y + 1; j++) {
-            if (i >= 0 && i < config.boardSize && j >= 0 && j < config.boardSize) {
-              if (board[i][j] === 1) {
-                counter++;
-              }
-              searchForSeparatedTile(x,y);
-            }
+        if (board[x][y] === 1) {
+          if (board[x][y-1] === 1) counter++;
+          if (board[x - 1][y] === 1) counter++;
+          if (board[x + 1][y] === 1) counter++;
+          if (board[x][y+1] === 1) counter++;
+          if (counter <= 1) {
+            fillGap(x,y);
           }
         }
       }
 
-      function searchForSeparatedTile (x,y) {
-        let closestTile = [];
-        if (y - 1 >= 0) {
-          if (board[x][y-1] === 0) {
-            closestTile.push([x,y-1]);
-          }
+      function fillGap (x,y) {
+        if (y - 2 >= 0 && board[x][y-2] === 1) {
+          board[x][y-1] = 1;
         }
-        if (x - 1 >= 0) {
-          if (board[x-1][y] === 0) {
-            closestTile.push([x-1,y]);
-          }
+        if (x - 2 >= 0 && board[x - 2][y] === 1) {
+          board[x - 1][y] = 1;
         }
-        if (x + 1 < config.boardSize) {
-          if (board[x+1][y] === 0) {
-            closestTile.push([x+1,y]);
-          }
+        if (x +2 < config.boardSize && board[x + 2][y] === 1) {
+          board[x + 1][y] = 1;
         }
-        if (y + 1 < config.boardSize) {
-          if (board[x][y+1] === 0) {
-            closestTile.push([x,y+1]);
-          }
-        }
-        if (closestTile.length > 2) {
-          let selectedIndex = randomIntFromInterval(0,closestTile.length -1);
-          let i = closestTile[selectedIndex][0];
-          let j = closestTile[selectedIndex][1];
-          board[i][j] = 1;
-          graph.drawArea(i * config.boardResolution, j * config.boardResolution);
+        if (y + 2 < config.boardSize && board[x][y+2] === 1) {
+          board[x][y+1] = 1;
         }
       }
 
