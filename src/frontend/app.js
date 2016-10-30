@@ -1,10 +1,17 @@
-'use strict';
+(() => {
+  'use strict';
 
-// Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.procedural'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/procedural'});
-}]);
+  const app = angular.module('myApp', [
+    'ngRoute',
+    'myApp.procedural'
+  ]);
+
+  app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.otherwise({redirectTo: '/procedural'});
+    $routeProvider.when('/procedural', {
+      templateUrl: 'modules/procedural/partial/procedural.html',
+      controller: 'proceduralCtrl'
+    });
+  }]);
+
+})();
