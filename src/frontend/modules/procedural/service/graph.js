@@ -39,7 +39,7 @@
       for (let i in mapArray) {
         for(let j in mapArray[i]) {
           if (mapArray[i][j] === 1) {
-            drawArea(i * 20, j * 20);
+            drawArea(i * config.boardResolution, j * config.boardResolution);
           }
         }
       }

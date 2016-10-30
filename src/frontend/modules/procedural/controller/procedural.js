@@ -4,8 +4,8 @@
   const app = angular.module('myApp.procedural',[]);
 
   app.constant('config', {
-    boardSize: 10,
-    boardResolution: 20
+    boardSize: 20,
+    boardResolution: 25
   });
 
   app.controller('proceduralCtrl', ['$scope', 'config', 'graphService', ($scope, config, graphService) => {
