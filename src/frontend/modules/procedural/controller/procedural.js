@@ -3,10 +3,14 @@
 
   const app = angular.module('myApp.procedural',[]);
 
-  app.controller('proceduralCtrl', ['$scope' , 'graphService', ($scope, graphService) => {
+  app.constant('config', {
+    boardSize: 10,
+    boardResolution: 20
+  });
+
+  app.controller('proceduralCtrl', ['$scope', 'config', 'graphService', ($scope, config, graphService) => {
       const graph = graphService;
-      const boardSize = 10;
-      let board = createMap(boardSize,boardSize);
+      let board = createMap(config.boardSize,config.boardSize);
 
       $scope.$on('$viewContentLoaded', () => {
         graph.drawGrid();
@@ -14,8 +18,8 @@
       });
 
       $scope.checkBoard = () => {
-        for ( let i = 0; i < boardSize; i++ ) {
-          for ( let j = 0; j < boardSize; j++ ) {
+        for ( let i = 0; i < config.boardSize; i++ ) {
+          for ( let j = 0; j < config.boardSize; j++ ) {
             checkVicinity(i,j);
           }
         }
@@ -48,7 +52,7 @@
         let counter = 0;
         for (let i = x - 1; i <= x + 1; i++) {
           for (let j = y - 1; j <= y + 1; j++) {
-            if (i >= 0 && i < boardSize && j >= 0 && j < boardSize) {
+            if (i >= 0 && i < config.boardSize && j >= 0 && j < config.boardSize) {
               if (board[i][j] === 1) {
                 counter++;
               }
@@ -70,12 +74,12 @@
             closestTile.push([x-1,y]);
           }
         }
-        if (x + 1 < boardSize) {
+        if (x + 1 < config.boardSize) {
           if (board[x+1][y] === 0) {
             closestTile.push([x+1,y]);
           }
         }
-        if (y + 1 < boardSize) {
+        if (y + 1 < config.boardSize) {
           if (board[x][y+1] === 0) {
             closestTile.push([x,y+1]);
           }

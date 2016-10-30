@@ -3,10 +3,8 @@
 
   const app = angular.module('myApp.procedural');
 
-  app.service('graphService',[() =>{
-    const boardSize = 10;
-    const boardResolution = 20;
-    const canvasSize = boardSize * boardResolution;
+  app.service('graphService',['config', (config) =>{
+    const canvasSize = config.boardSize * config.boardResolution;
     const canvas = document.getElementById('tutorial');
     const ctx = canvas.getContext('2d');
     ctx.canvas.width = canvasSize;
@@ -20,7 +18,7 @@
     return service;
 
     function drawGrid() {
-      for (let i = 0; i <= canvasSize; i = i + boardResolution){
+      for (let i = 0; i <= canvasSize; i = i + config.boardResolution){
         ctx.moveTo(i,0);
         ctx.lineTo(i,canvasSize);
         ctx.moveTo(0,i);
@@ -31,7 +29,7 @@
 
     function drawArea(x, y) {
       ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-      ctx.fillRect (x, y, boardResolution, boardResolution);
+      ctx.fillRect (x, y, config.boardResolution, config.boardResolution);
     }
 
     function drawMap(mapArray) {
