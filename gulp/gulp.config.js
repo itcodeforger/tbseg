@@ -16,7 +16,10 @@ module.exports = {
   jsScripts: [
     'src/frontend/app.js',
     'src/frontend/modules/procedural/controller/procedural.js',
-    'src/frontend/modules/procedural/service/graph.js'
+    'src/frontend/modules/procedural/service/graph.js',
+    'src/frontend/modules/procedural/service/mapTransformations.js',
+    'src/frontend/modules/procedural/service/math.js',
+    'src/frontend/modules/procedural/service/storage.js'
   ],
   gulpLoadPlugins: {
     DEBUG: false,

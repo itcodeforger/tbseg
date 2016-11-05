@@ -3,7 +3,7 @@
 
   const app = angular.module('myApp.procedural');
 
-  app.service('graphService',['config', (config) =>{
+  app.service('graphService',['config', (config) => {
     const canvasSize = config.boardSize * config.boardResolution;
     const canvas = document.getElementById('tutorial');
     const ctx = canvas.getContext('2d');
