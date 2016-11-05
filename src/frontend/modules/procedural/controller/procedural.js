@@ -5,7 +5,8 @@
 
   app.constant('config', {
     boardSize: 20,
-    boardResolution: 25
+    boardResolution: 25,
+    fillDegree: 2
   });
 
   app.controller('proceduralCtrl', ['$scope', 'config', 'graphService', 'mapTransformations', 'localStorageOperations',
