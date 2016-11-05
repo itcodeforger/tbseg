@@ -12,7 +12,9 @@
     };
     return service;
     
-    function createMap (rows,cols) {
+    function createMap () {
+      const rows = config.boardSize;
+      const cols = config.boardSize;
       let arr = [];
       for ( let i=0; i < rows; i++ ) {
         arr.push([]);

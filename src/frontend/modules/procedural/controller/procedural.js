@@ -13,7 +13,7 @@
       const lso = localStorageOperations;
       const mt = mapTransformations;
       const graph = graphService;
-      let board = mt.createMap(config.boardSize,config.boardSize);
+      let board = mt.createMap();
 
       $scope.$on('$viewContentLoaded', () => {
         graph.drawGrid();
@@ -44,7 +44,7 @@
 
       $scope.newBoard = () => {
         graph.clearMap();
-        board = mt.createMap(config.boardSize,config.boardSize);
+        board = mt.createMap();
         graph.drawGrid();
         graph.drawMap(board);
       };
