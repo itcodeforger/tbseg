@@ -20,5 +20,11 @@ module.exports = (gulp, options, plugins) => {
       .pipe(plugins.sass({ importer: plugins.compassImporter }).on('error', plugins.sass.logError))
       .pipe(gulp.dest('./app/public_html/css/'));
   });
+  
+  gulp.task('css-library', () => {
+    return gulp.src(options.cssLibrary)
+      .pipe(plugins.concat('library.css'))
+      .pipe(gulp.dest('./app/public_html/css/'));
+  });
 
 };

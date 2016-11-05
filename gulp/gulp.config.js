@@ -21,6 +21,10 @@ module.exports = {
     'src/frontend/modules/procedural/service/math.js',
     'src/frontend/modules/procedural/service/storage.js'
   ],
+  cssLibrary: [
+    'src/frontend/bower_components/html5-boilerplate/dist/css/normalize.css',
+    'src/frontend/bower_components/html5-boilerplate/dist/css/main.css'
+  ],
   gulpLoadPlugins: {
     DEBUG: false,
     pattern: ['gulp-*', 'gulp.*', 'del', 'babel-preset-es2015', 'karma*', 'jasmine-core', 'browserify', 'watchify', 'compass*'],

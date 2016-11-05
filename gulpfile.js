@@ -18,6 +18,7 @@ gulp.task('build', plugins.sequence(
   'clear-all',
   'copy-html',
   'copy-css',
+  'css-library',
   'compile-library',
   'compile-scripts'
 ));
@@ -27,6 +28,7 @@ gulp.task('build-dev-sequence', (callback) => {
     'clear-all',
     'copy-html',
     'copy-css',
+    'css-library',
     'compile-library',
     'compile-scripts'
   )(callback)
