@@ -23,6 +23,7 @@
       const mm = mapMovement;
       let board = mt.createMap();
       let tileList = mt.createTileList(board);
+      let start = mm.getStartingPosition(tileList);
 
       $scope.$on('$viewContentLoaded', () => {
         init();
@@ -30,17 +31,19 @@
       
       $scope.saveBoard = () => {
         lso.saveData('board',board);
+        lso.saveData('start',start);
       };
 
       $scope.loadBoard = () => {
         board = lso.getData('board');
-        tileList = mt.createTileList(board);
+        start = lso.getData('start');
         init();
       };
 
       $scope.newBoard = () => {
         board = mt.createMap();
         tileList = mt.createTileList(board);
+        start = mm.getStartingPosition(tileList);
         init();
       };
       
@@ -48,7 +51,7 @@
         graph.clearMap();
         graph.drawGrid();
         graph.drawMap(board);
-        console.log(mm.getStartingPosition(tileList));
+        console.log(start);
       }
       
     }]);
