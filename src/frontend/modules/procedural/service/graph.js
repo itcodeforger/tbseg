@@ -1,8 +1,8 @@
 (() => {
   'use strict';
-
+  
   const app = angular.module('myApp.procedural');
-
+  
   app.service('graphService',['config', (config) => {
     const canvasSize = config.boardSize * config.boardResolution;
     const canvas = document.getElementById('tutorial');
@@ -13,10 +13,11 @@
       drawGrid: drawGrid,
       drawArea: drawArea,
       drawMap: drawMap,
-      clearMap: clearMap
+      clearMap: clearMap,
+      drawObject: drawObject
     };
     return service;
-
+    
     function drawGrid() {
       for (let i = 0; i <= canvasSize; i = i + config.boardResolution){
         ctx.moveTo(i,0);
@@ -26,12 +27,12 @@
       }
       ctx.stroke();
     }
-
+    
     function drawArea(x, y) {
       ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
       ctx.fillRect (x, y, config.boardResolution, config.boardResolution);
     }
-
+    
     function drawMap(mapArray) {
       for (let i in mapArray) {
         for(let j in mapArray[i]) {
@@ -41,7 +42,13 @@
         }
       }
     }
-
+    
+    function drawObject(position) {
+      ctx.fillStyle = "rgba(0, 0, 0, 1)";
+      ctx.font = "bold 20px Arial";
+      ctx.fillText( '@' ,position[0] * config.boardResolution + 2 , position[1] * config.boardResolution + 18);
+    }
+    
     function clearMap() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
