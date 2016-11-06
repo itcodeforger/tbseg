@@ -8,7 +8,8 @@
     const service = {
       createMap: createMap,
       checkVicinity: checkVicinity,
-      fillGap: fillGap
+      fillGap: fillGap,
+      createTileList: createTileList
     };
     return service;
     
@@ -28,7 +29,8 @@
           }
         }
       }
-      return arr;
+      const map = checkBoard(arr)
+      return map;
     }
     
     function checkVicinity (x,y,board) {
@@ -42,6 +44,7 @@
           fillGap(x,y,board);
         }
       }
+      return board;
     }
     
     function fillGap (x,y,board) {
@@ -82,6 +85,26 @@
           board[x][y] = 0;
         }
       }
+      return board;
+    }
+    
+    function createTileList (board) {
+      let arr = [];
+      for ( let i = 1; i < config.boardSize - 1; i++ ) {
+        for ( let j = 1; j < config.boardSize - 1; j++ ) {
+          if (board[i][j] != 0) arr.push([i,j]);
+        }
+      }
+      return arr;
+    }
+    
+    function checkBoard (board) {
+      for ( let i = 1; i < config.boardSize - 1; i++ ) {
+        for ( let j = 1; j < config.boardSize - 1; j++ ) {
+          checkVicinity(i,j,board);
+        }
+      }
+      return board;
     }
     
   }])

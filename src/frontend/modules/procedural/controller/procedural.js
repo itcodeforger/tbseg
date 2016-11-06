@@ -9,46 +9,47 @@
     fillDegree: 2
   });
 
-  app.controller('proceduralCtrl', ['$scope', 'config', 'graphService', 'mapTransformations', 'localStorageOperations',
-    ($scope, config, graphService, mapTransformations, localStorageOperations) => {
+  app.controller('proceduralCtrl', [
+    '$scope',
+    'config',
+    'graphService',
+    'mapTransformations',
+    'localStorageOperations',
+    'mapMovement',
+    ($scope, config, graphService, mapTransformations, localStorageOperations, mapMovement) => {
       const lso = localStorageOperations;
       const mt = mapTransformations;
       const graph = graphService;
+      const mm = mapMovement;
       let board = mt.createMap();
+      let tileList = mt.createTileList(board);
 
       $scope.$on('$viewContentLoaded', () => {
-        graph.drawGrid();
-        graph.drawMap(board);
+        init();
       });
-
-      $scope.checkBoard = () => {
-        for ( let i = 1; i < config.boardSize - 1; i++ ) {
-          for ( let j = 1; j < config.boardSize - 1; j++ ) {
-            mt.checkVicinity(i,j,board);
-          }
-        }
-        graph.clearMap();
-        graph.drawGrid();
-        graph.drawMap(board);
-      };
-
+      
       $scope.saveBoard = () => {
         lso.saveData('board',board);
       };
 
       $scope.loadBoard = () => {
-        graph.clearMap();
         board = lso.getData('board');
-        graph.drawGrid();
-        graph.drawMap(board);
+        tileList = mt.createTileList(board);
+        init();
       };
 
       $scope.newBoard = () => {
-        graph.clearMap();
         board = mt.createMap();
+        tileList = mt.createTileList(board);
+        init();
+      };
+      
+      function init() {
+        graph.clearMap();
         graph.drawGrid();
         graph.drawMap(board);
-      };
+        console.log(mm.getStartingPosition(tileList));
+      }
       
     }]);
 })();
