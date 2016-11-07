@@ -11,8 +11,20 @@
     return service;
     
     function getStartingPosition (tileList) {
-      const selectedIndex = mo.randomIntFromInterval(0,tileList.length);
-      return tileList[selectedIndex];
+      let mapObjects = [];
+      let results = [];
+      let i = 0;
+      while (i < config.startingObjects){
+        let selectedIndex = mo.randomIntFromInterval(0,tileList.length);
+        if (mapObjects.indexOf(selectedIndex) === -1) {
+          mapObjects.push(selectedIndex);
+          i++;
+        }
+      }
+      for (let i = 0; i < mapObjects.length; i++) {
+        results.push(tileList[mapObjects[i]]);
+      }
+      return results;
     }
   }])
 })();

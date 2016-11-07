@@ -6,7 +6,8 @@
   app.constant('config', {
     boardSize: 20,
     boardResolution: 25,
-    fillDegree: 2
+    fillDegree: 2,
+    startingObjects: 5
   });
   
   app.controller('proceduralCtrl', [
@@ -23,7 +24,8 @@
       const mm = mapMovement;
       let board = mt.createMap();
       let tileList = mt.createTileList(board);
-      let start = mm.getStartingPosition(tileList);
+      let initialSetup = mm.getStartingPosition(tileList);
+      let playerLocation = initialSetup[0];
       
       $scope.$on('$viewContentLoaded', () => {
         init();
@@ -31,47 +33,54 @@
       
       $scope.saveBoard = () => {
         lso.saveData('board',board);
-        lso.saveData('start',start);
+        lso.saveData('initialSetup',initialSetup);
       };
       
       $scope.loadBoard = () => {
         board = lso.getData('board');
-        start = lso.getData('start');
+        initialSetup = lso.getData('initialSetup');
+        playerLocation = initialSetup[0];
         init();
       };
       
       $scope.newBoard = () => {
         board = mt.createMap();
         tileList = mt.createTileList(board);
-        start = mm.getStartingPosition(tileList);
+        initialSetup = mm.getStartingPosition(tileList);
+        playerLocation = initialSetup[0];
         init();
       };
       
       //movement
       $scope.goLeft = () => {
-        if (board[start[0] - 1][start[1]] === 1) {
-          start = [start[0] - 1, start[1]];
+        if (board[playerLocation[0] - 1][playerLocation[1]] === 1) {
+          playerLocation = [playerLocation[0] - 1, playerLocation[1]];
+          initialSetup[0] = playerLocation;
           init();
         }
       };
       
       $scope.goUp = () => {
-        if (board[start[0]][start[1] - 1] === 1) {
-          start = [start[0], start[1] - 1];
+        if (board[playerLocation[0]][playerLocation[1] - 1] === 1) {
+          playerLocation = [playerLocation[0], playerLocation[1] - 1];
+          initialSetup[0] = playerLocation;
           init();
         }
       };
       
       $scope.goDown = () => {
-        if (board[start[0]][start[1] + 1] === 1) {
-          start = [start[0], start[1] + 1];
+        if (board[playerLocation[0]][playerLocation[1] + 1] === 1) {
+          playerLocation = [playerLocation[0], playerLocation[1] + 1];
+          initialSetup[0] = playerLocation;
           init();
         }
       };
       
       $scope.goRight = () => {
-        if (board[start[0] + 1][start[1]] === 1) {
-          start = [start[0] + 1, start[1]];
+        initialSetup[0] = playerLocation;
+        if (board[playerLocation[0] + 1][playerLocation[1]] === 1) {
+          playerLocation = [playerLocation[0] + 1, playerLocation[1]];
+          initialSetup[0] = playerLocation;
           init();
         }
       };
@@ -80,7 +89,8 @@
         graph.clearMap();
         graph.drawGrid();
         graph.drawMap(board);
-        graph.drawObject(start);
+        console.log(initialSetup);
+        graph.drawObject(initialSetup);
       }
       
     }]);
