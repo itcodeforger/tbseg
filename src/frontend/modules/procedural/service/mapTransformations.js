@@ -6,12 +6,21 @@
   app.service('mapTransformations', ['config', 'mathOperations', (config, mathOperations) => {
     const mo = mathOperations;
     const service = {
+      createBoard: createBoard,
       createMap: createMap,
       checkVicinity: checkVicinity,
       fillGap: fillGap,
       createTileList: createTileList
     };
     return service;
+    
+    function createBoard () {
+      let board = [];
+      for (let i = 0; i < config.startingObjects; i++) {
+        board.push(createMap());
+      }
+      return board;
+    }
     
     function createMap () {
       const rows = config.boardSize;
@@ -29,8 +38,8 @@
           }
         }
       }
-      const map = checkBoard(arr)
-      return map;
+      const map = checkBoard(arr);
+      return checkBoard(map);
     }
     
     function checkVicinity (x,y,board) {
