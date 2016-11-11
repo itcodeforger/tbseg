@@ -26,6 +26,7 @@
       let tileList = mt.createTileList(board);
       let initialSetup = mm.getStartingPosition(tileList);
       let playerLocation = initialSetup[0];
+      $scope.atTheGate = false;
       
       $scope.$on('$viewContentLoaded', () => {
         init();
@@ -85,12 +86,16 @@
         }
       };
       
+      $scope.enterGate = () => {
+        return mm.enterGate();
+      };
+      
       function init() {
         graph.clearMap();
         graph.drawGrid();
         graph.drawMap(board);
-        console.log(initialSetup);
         graph.drawObject(initialSetup);
+        $scope.atTheGate = mm.checkTileForGate(initialSetup);
       }
       
     }]);

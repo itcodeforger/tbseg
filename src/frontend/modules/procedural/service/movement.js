@@ -6,7 +6,9 @@
   app.service('mapMovement', ['config', 'mathOperations', (config, mathOperations) => {
     const mo = mathOperations;
     const service = {
-      getStartingPosition: getStartingPosition
+      getStartingPosition: getStartingPosition,
+      enterGate: enterGate,
+      checkTileForGate: checkTileForGate
     };
     return service;
     
@@ -25,6 +27,19 @@
         results.push(tileList[mapObjects[i]]);
       }
       return results;
+    }
+    
+    function checkTileForGate(initialSetup) {
+      for (let i = 1; i < initialSetup.length; i++) {
+        if (JSON.stringify(initialSetup[i]) === JSON.stringify(initialSetup[0])) {
+          return true;
+        }
+      }
+      return false;
+    }
+    
+    function enterGate (initialSetup) {
+      console.log(initialSetup);
     }
   }])
 })();
