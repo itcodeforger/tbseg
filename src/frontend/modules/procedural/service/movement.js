@@ -7,7 +7,6 @@
     const mo = mathOperations;
     const service = {
       getStartingPosition: getStartingPosition,
-      enterGate: enterGate,
       checkTileForGate: checkTileForGate
     };
     return service;
@@ -32,14 +31,11 @@
     function checkTileForGate(initialSetup) {
       for (let i = 1; i < initialSetup.length; i++) {
         if (JSON.stringify(initialSetup[i]) === JSON.stringify(initialSetup[0])) {
-          return true;
+          return [i,true];
         }
       }
-      return false;
+      return [0,false];
     }
-    
-    function enterGate (initialSetup) {
-      console.log(initialSetup);
-    }
+
   }])
 })();

@@ -17,7 +17,9 @@
     function createBoard () {
       let board = [];
       for (let i = 0; i < config.startingObjects; i++) {
-        board.push(createMap());
+        const map = createMap();
+        const list = createTileList(map);
+        board.push(new mapObject(i, config.boardSize, config.boardSize, map, list));
       }
       return board;
     }
@@ -114,6 +116,14 @@
         }
       }
       return board;
+    }
+    
+    function mapObject(id, rows, cols, map, list) {
+      this.id = id;
+      this.rows = rows;
+      this.cols = cols;
+      this.map = map;
+      this.list = list;
     }
     
   }])
