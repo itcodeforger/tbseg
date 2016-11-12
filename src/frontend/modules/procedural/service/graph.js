@@ -28,16 +28,16 @@
       ctx.stroke();
     }
     
-    function drawArea(x, y) {
-      ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+    function drawArea(x, y, color) {
+      ctx.fillStyle = color;
       ctx.fillRect (x, y, config.boardResolution, config.boardResolution);
     }
     
-    function drawMap(mapArray) {
+    function drawMap(mapArray, mapColor) {
       for (let i in mapArray) {
         for(let j in mapArray[i]) {
           if (mapArray[i][j] === 1) {
-            drawArea(i * config.boardResolution, j * config.boardResolution);
+            drawArea(i * config.boardResolution, j * config.boardResolution, mapColor);
           }
         }
       }

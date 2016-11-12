@@ -26,7 +26,8 @@
       
       let board = mt.createBoard();
       let mainMap = board[0].map;
-      let tileList =board[0].list;
+      let tileList = board[0].list;
+      let mapColor = board[0].color;
       let initialSetup = board[0].initialSetup;
       let playerLocation = initialSetup[0];
       $scope.atTheGate = false;
@@ -42,6 +43,7 @@
       $scope.loadBoard = () => {
         board = lso.getData('board');
         mainMap = board[0].map;
+        mapColor = board[0].color;
         initialSetup = board[0].initialSetup;
         playerLocation = initialSetup[0];
         init();
@@ -51,6 +53,7 @@
         board = mt.createBoard();
         mainMap = board[0].map;
         tileList = board[0].list;
+        mapColor = board[0].color;
         initialSetup = board[0].initialSetup;
         playerLocation = initialSetup[0];
         init();
@@ -93,13 +96,16 @@
       $scope.enterGate = () => {
         const newIndex = mm.checkTileForGate(initialSetup)[0];
         mainMap = board[newIndex].map;
+        mapColor = board[newIndex].color;
+        initialSetup = board[newIndex].initialSetup;
+        playerLocation = initialSetup[0];
         init();
       };
       
       function init() {
         graph.clearMap();
         graph.drawGrid();
-        graph.drawMap(mainMap);
+        graph.drawMap(mainMap, mapColor);
         graph.drawObject(initialSetup);
         $scope.atTheGate = mm.checkTileForGate(initialSetup)[1];
       }

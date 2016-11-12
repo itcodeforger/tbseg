@@ -22,7 +22,8 @@
         const map = createMap();
         const list = createTileList(map);
         const initialSetup = mm.getStartingPosition(list);
-        board.push(new mapObject(i, config.boardSize, config.boardSize, map, list, initialSetup));
+        const color = 'rgba(' + mo.randomIntFromInterval(0,255) + ', ' + mo.randomIntFromInterval(0,255) + ', ' + mo.randomIntFromInterval(0,255) + ', 0.5)';
+        board.push(new mapObject(i, config.boardSize, config.boardSize, map, list, initialSetup, color));
       }
       return board;
     }
@@ -121,13 +122,14 @@
       return board;
     }
     
-    function mapObject(id, rows, cols, map, list, initialSetup) {
+    function mapObject(id, rows, cols, map, list, initialSetup, color) {
       this.id = id;
       this.rows = rows;
       this.cols = cols;
       this.map = map;
       this.list = list;
       this.initialSetup = initialSetup;
+      this.color = color;
     }
     
   }])
