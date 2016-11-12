@@ -3,8 +3,10 @@
   
   const app = angular.module('myApp.procedural');
   
-  app.service('mapTransformations', ['config', 'mathOperations', (config, mathOperations) => {
+  app.service('mapTransformations', ['config', 'mathOperations', 'mapMovement', (config, mathOperations, mapMovement) => {
     const mo = mathOperations;
+    const mm = mapMovement;
+    
     const service = {
       createBoard: createBoard,
       createMap: createMap,
@@ -19,7 +21,8 @@
       for (let i = 0; i < config.startingObjects; i++) {
         const map = createMap();
         const list = createTileList(map);
-        board.push(new mapObject(i, config.boardSize, config.boardSize, map, list));
+        const initialSetup = mm.getStartingPosition(list);
+        board.push(new mapObject(i, config.boardSize, config.boardSize, map, list, initialSetup));
       }
       return board;
     }
@@ -118,12 +121,13 @@
       return board;
     }
     
-    function mapObject(id, rows, cols, map, list) {
+    function mapObject(id, rows, cols, map, list, initialSetup) {
       this.id = id;
       this.rows = rows;
       this.cols = cols;
       this.map = map;
       this.list = list;
+      this.initialSetup = initialSetup;
     }
     
   }])

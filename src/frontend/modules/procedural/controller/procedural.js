@@ -27,7 +27,7 @@
       let board = mt.createBoard();
       let mainMap = board[0].map;
       let tileList =board[0].list;
-      let initialSetup = mm.getStartingPosition(tileList);
+      let initialSetup = board[0].initialSetup;
       let playerLocation = initialSetup[0];
       $scope.atTheGate = false;
       
@@ -37,13 +37,12 @@
       
       $scope.saveBoard = () => {
         lso.saveData('board',board);
-        lso.saveData('initialSetup',initialSetup);
       };
       
       $scope.loadBoard = () => {
         board = lso.getData('board');
         mainMap = board[0].map;
-        initialSetup = lso.getData('initialSetup');
+        initialSetup = board[0].initialSetup;
         playerLocation = initialSetup[0];
         init();
       };
@@ -52,7 +51,7 @@
         board = mt.createBoard();
         mainMap = board[0].map;
         tileList = board[0].list;
-        initialSetup = mm.getStartingPosition(tileList);
+        initialSetup = board[0].initialSetup;
         playerLocation = initialSetup[0];
         init();
       };
