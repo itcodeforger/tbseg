@@ -17,19 +17,21 @@
     'mapTransformations',
     'localStorageOperations',
     'mapMovement',
-    ($scope, config, graphService, mapTransformations, localStorageOperations, mapMovement) => {
+    'playerObject',
+    ($scope, config, graphService, mapTransformations, localStorageOperations, mapMovement, playerObject) => {
       
       const lso = localStorageOperations;
       const mt = mapTransformations;
       const graph = graphService;
       const mm = mapMovement;
+      const po = playerObject;
       
       let board = mt.createBoard();
       let mainMap = board[0].map;
       let tileList = board[0].list;
       let mapColor = board[0].color;
       let initialSetup = board[0].initialSetup;
-      let playerLocation = initialSetup[0];
+      let player = po.createPlayer(tileList,0);
       $scope.atTheGate = false;
       
       $scope.$on('$viewContentLoaded', () => {
@@ -37,15 +39,16 @@
       });
       
       $scope.saveBoard = () => {
-        lso.saveData('board',board);
+        lso.saveData('board', board);
+        lso.saveData('player', player);
       };
       
       $scope.loadBoard = () => {
         board = lso.getData('board');
+        player = lso.getData('player');
         mainMap = board[0].map;
         mapColor = board[0].color;
         initialSetup = board[0].initialSetup;
-        playerLocation = initialSetup[0];
         init();
       };
       
@@ -55,40 +58,36 @@
         tileList = board[0].list;
         mapColor = board[0].color;
         initialSetup = board[0].initialSetup;
-        playerLocation = initialSetup[0];
+        player = po.createPlayer(tileList,0);
+        console.log(player);
         init();
       };
       
       //movement
       $scope.goLeft = () => {
-        if (mainMap[playerLocation[0] - 1][playerLocation[1]] === 1) {
-          playerLocation = [playerLocation[0] - 1, playerLocation[1]];
-          initialSetup[0] = playerLocation;
+        if (mainMap[player.location[0] - 1][player.location[1]] === 1) {
+          player.location = [player.location[0] - 1, player.location[1]];
           init();
         }
       };
       
       $scope.goUp = () => {
-        if (mainMap[playerLocation[0]][playerLocation[1] - 1] === 1) {
-          playerLocation = [playerLocation[0], playerLocation[1] - 1];
-          initialSetup[0] = playerLocation;
+        if (mainMap[player.location[0]][player.location[1] - 1] === 1) {
+          player.location = [player.location[0], player.location[1] - 1];
           init();
         }
       };
       
       $scope.goDown = () => {
-        if (mainMap[playerLocation[0]][playerLocation[1] + 1] === 1) {
-          playerLocation = [playerLocation[0], playerLocation[1] + 1];
-          initialSetup[0] = playerLocation;
+        if (mainMap[player.location[0]][player.location[1] + 1] === 1) {
+          player.location = [player.location[0], player.location[1] + 1];
           init();
         }
       };
       
       $scope.goRight = () => {
-        initialSetup[0] = playerLocation;
-        if (mainMap[playerLocation[0] + 1][playerLocation[1]] === 1) {
-          playerLocation = [playerLocation[0] + 1, playerLocation[1]];
-          initialSetup[0] = playerLocation;
+        if (mainMap[player.location[0] + 1][player.location[1]] === 1) {
+          player.location = [player.location[0] + 1, player.location[1]];
           init();
         }
       };
@@ -98,7 +97,7 @@
         mainMap = board[newIndex].map;
         mapColor = board[newIndex].color;
         initialSetup = board[newIndex].initialSetup;
-        playerLocation = initialSetup[0];
+        player.location = initialSetup[0];
         init();
       };
       
@@ -106,7 +105,8 @@
         graph.clearMap();
         graph.drawGrid();
         graph.drawMap(mainMap, mapColor);
-        graph.drawObject(initialSetup);
+        graph.drawObject(initialSetup, 'gate');
+        graph.drawObject(player.location, 'player');
         $scope.atTheGate = mm.checkTileForGate(initialSetup)[1];
       }
       

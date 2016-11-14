@@ -6,16 +6,17 @@
   app.service('mapMovement', ['config', 'mathOperations', (config, mathOperations) => {
     const mo = mathOperations;
     const service = {
-      getStartingPosition: getStartingPosition,
+      gatePosition: gatePosition,
       checkTileForGate: checkTileForGate
     };
     return service;
     
-    function getStartingPosition (tileList) {
+    function gatePosition (tileList, mapId) {
       let mapObjects = [];
       let results = [];
       let i = 0;
-      while (i < config.startingObjects){
+      const numberOfGates = mapId === 0 ? config.startingObjects : 1;
+      while (i < numberOfGates){
         let selectedIndex = mo.randomIntFromInterval(0,tileList.length);
         if (mapObjects.indexOf(selectedIndex) === -1) {
           mapObjects.push(selectedIndex);

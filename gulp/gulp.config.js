@@ -20,7 +20,8 @@ module.exports = {
     'src/frontend/modules/procedural/service/mapTransformations.js',
     'src/frontend/modules/procedural/service/math.js',
     'src/frontend/modules/procedural/service/storage.js',
-    'src/frontend/modules/procedural/service/movement.js'
+    'src/frontend/modules/procedural/service/movement.js',
+    'src/frontend/modules/procedural/service/player.js',
   ],
   cssLibrary: [
     'src/frontend/bower_components/html5-boilerplate/dist/css/normalize.css',

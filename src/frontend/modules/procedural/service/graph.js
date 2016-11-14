@@ -43,18 +43,21 @@
       }
     }
     
-    function drawObject(position) {
-      ctx.fillStyle = "rgba(0, 0, 0, 1)";
-      ctx.font = "bold 20px Arial";
-      for (let i = 0; i < position.length; i++) {
-        if (i === 0) {
-          ctx.fillText( '@' ,position[i][0] * config.boardResolution + 2 , position[i][1] * config.boardResolution + 18);
-        }
-        else {
+    function drawObject(position, key) {
+      if (key === 'gate') {
+        ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        ctx.font = "bold 20px Arial";
+        for (let i = 0; i < position.length; i++) {
           ctx.fillText( 'A' ,position[i][0] * config.boardResolution + 2 , position[i][1] * config.boardResolution + 18);
         }
-        
       }
+      
+      if (key === 'player') {
+        ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        ctx.font = "bold 20px Arial";
+        ctx.fillText( '@' ,position[0] * config.boardResolution + 2 , position[1] * config.boardResolution + 18);
+      }
+      
     }
     
     function clearMap() {
