@@ -30,9 +30,14 @@
       return results;
     }
     
-    function checkTileForGate(initialSetup) {
-      for (let i = 1; i < initialSetup.length; i++) {
-        if (JSON.stringify(initialSetup[i]) === JSON.stringify(initialSetup[0])) {
+    function checkTileForGate(initialSetup, location) {
+      console.log('inside check for gates');
+      console.log(initialSetup);
+      console.log(location);
+      for (let i = 0; i < initialSetup.length; i++) {
+        console.log(i);
+        if (JSON.stringify(initialSetup[i]) === JSON.stringify(location)) {
+          console.log('ok');
           return [i,true];
         }
       }

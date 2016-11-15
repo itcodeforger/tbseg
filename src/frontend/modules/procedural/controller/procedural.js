@@ -59,7 +59,6 @@
         mapColor = board[0].color;
         initialSetup = board[0].initialSetup;
         player = po.createPlayer(tileList,0);
-        console.log(player);
         init();
       };
       
@@ -93,10 +92,12 @@
       };
       
       $scope.enterGate = () => {
-        const newIndex = mm.checkTileForGate(initialSetup)[0];
+        const gateId = (mm.checkTileForGate(initialSetup, player.location)[0]);
+        const newIndex = player.mapId === 0 ? gateId + 1 : 0; 
         mainMap = board[newIndex].map;
         mapColor = board[newIndex].color;
         initialSetup = board[newIndex].initialSetup;
+        player.mapId = newIndex;
         player.location = initialSetup[0];
         init();
       };
@@ -107,7 +108,7 @@
         graph.drawMap(mainMap, mapColor);
         graph.drawObject(initialSetup, 'gate');
         graph.drawObject(player.location, 'player');
-        $scope.atTheGate = mm.checkTileForGate(initialSetup)[1];
+        $scope.atTheGate = mm.checkTileForGate(initialSetup, player.location)[1];
       }
       
     }]);
