@@ -33,6 +33,8 @@
       let initialSetup = board[0].initialSetup;
       let player = po.createPlayer(tileList,0);
       $scope.atTheGate = false;
+      $scope.mapId = 0;
+      $scope.gateNo = 0;
       
       $scope.$on('$viewContentLoaded', () => {
         init();
@@ -46,9 +48,10 @@
       $scope.loadBoard = () => {
         board = lso.getData('board');
         player = lso.getData('player');
-        mainMap = board[0].map;
-        mapColor = board[0].color;
-        initialSetup = board[0].initialSetup;
+        tileList = board[player.mapId].list;
+        mainMap = board[player.mapId].map;
+        mapColor = board[player.mapId].color;
+        initialSetup = board[player.mapId].initialSetup;
         init();
       };
       
@@ -93,22 +96,24 @@
       
       $scope.enterGate = () => {
         const gateId = (mm.checkTileForGate(initialSetup, player.location)[0]);
-        const newIndex = player.mapId === 0 ? gateId + 1 : 0; 
+        const newIndex = player.mapId === 0 ? gateId : 0;
         mainMap = board[newIndex].map;
         mapColor = board[newIndex].color;
         initialSetup = board[newIndex].initialSetup;
+        player.location = player.mapId === 0 ? initialSetup[0] : board[0].initialSetup[player.mapId];
         player.mapId = newIndex;
-        player.location = initialSetup[0];
         init();
       };
       
       function init() {
+        $scope.mapId = player.mapId;
         graph.clearMap();
         graph.drawGrid();
         graph.drawMap(mainMap, mapColor);
         graph.drawObject(initialSetup, 'gate');
         graph.drawObject(player.location, 'player');
         $scope.atTheGate = mm.checkTileForGate(initialSetup, player.location)[1];
+        $scope.gateNo = mm.checkTileForGate(initialSetup, player.location)[0];
       }
       
     }]);

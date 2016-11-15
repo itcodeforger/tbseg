@@ -48,7 +48,7 @@
         ctx.fillStyle = "rgba(0, 0, 0, 1)";
         ctx.font = "bold 20px Arial";
         for (let i = 0; i < position.length; i++) {
-          ctx.fillText( 'A' ,position[i][0] * config.boardResolution + 2 , position[i][1] * config.boardResolution + 18);
+          ctx.fillText( 'A' + i ,position[i][0] * config.boardResolution + 2 , position[i][1] * config.boardResolution + 18);
         }
       }
       

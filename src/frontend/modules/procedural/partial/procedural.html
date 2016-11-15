@@ -1,4 +1,7 @@
 <div class="row">
+ <strong>World: {{ mapId }}</strong>
+</div>
+<div class="row">
   <canvas id="tutorial"></canvas>
 </div>
 <div class="row">
@@ -17,5 +20,5 @@
   <button ng-click="goRight()">RIGHT</button>
 </div>
 <div class="row">
-  <button ng-show="atTheGate" ng-click="enterGate()">ENTER</button>
+  <button ng-show="atTheGate && ((mapId === 0 && gateNo != 0) || (mapId != 0))" ng-click="enterGate()">ENTER World: {{ gateNo }}</button>
 </div>
