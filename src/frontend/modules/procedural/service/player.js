@@ -11,7 +11,8 @@
     return service;
     
     function createPlayer (tileList, mapId) {
-      const selectedIndex = mo.randomIntFromInterval(0,tileList.length);
+      const end = (tileList.length) - 1;
+      const selectedIndex = mo.randomIntFromInterval(0, end);
       const player = {
         mapId: mapId,
         location: tileList[selectedIndex]

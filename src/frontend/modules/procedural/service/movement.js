@@ -17,7 +17,8 @@
       let i = 0;
       const numberOfGates = mapId === 0 ? config.startingObjects : 1;
       while (i < numberOfGates){
-        let selectedIndex = mo.randomIntFromInterval(0,tileList.length);
+        const end = (tileList.length) - 1;
+        let selectedIndex = mo.randomIntFromInterval(0, end);
         if (mapObjects.indexOf(selectedIndex) === -1) {
           mapObjects.push(selectedIndex);
           i++;
