@@ -5,7 +5,7 @@
   
   app.service('graphService',['config', (config) => {
     const canvasSize = config.boardSize * config.boardResolution;
-    const canvas = document.getElementById('tutorial');
+    const canvas = document.getElementById('board');
     const ctx = canvas.getContext('2d');
     ctx.canvas.width = canvasSize;
     ctx.canvas.height = canvasSize;
