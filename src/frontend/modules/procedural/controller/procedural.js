@@ -17,8 +17,14 @@
     'mapTransformations',
     'localStorageOperations',
     'mapMovement',
-    'playerObject',
-    ($scope, config, graphService, mapTransformations, localStorageOperations, mapMovement, playerObject) => {
+    'playerObject', (
+      $scope,
+      config,
+      graphService,
+      mapTransformations,
+      localStorageOperations,
+      mapMovement,
+      playerObject) => {
       
       const lso = localStorageOperations;
       const mt = mapTransformations;
@@ -32,30 +38,21 @@
       let mapColor = board[0].color;
       let initialSetup = board[0].initialSetup;
       let player = po.createPlayer(tileList,0);
+      
+      $scope.$on('$viewContentLoaded', () => init());
       $scope.atTheGate = false;
       $scope.mapId = 0;
       $scope.gateNo = 0;
+      $scope.saveBoard = saveBoard;
+      $scope.loadBoard = loadBoard;
+      $scope.newBoard = newBoard;
+      $scope.goLeft = goLeft;
+      $scope.goUp = goUp;
+      $scope.goDown = goDown;
+      $scope.goRight = goRight;
+      $scope.enterGate = enterGate;
       
-      $scope.$on('$viewContentLoaded', () => {
-        init();
-      });
-      
-      $scope.saveBoard = () => {
-        lso.saveData('board', board);
-        lso.saveData('player', player);
-      };
-      
-      $scope.loadBoard = () => {
-        board = lso.getData('board');
-        player = lso.getData('player');
-        tileList = board[player.mapId].list;
-        mainMap = board[player.mapId].map;
-        mapColor = board[player.mapId].color;
-        initialSetup = board[player.mapId].initialSetup;
-        init();
-      };
-      
-      $scope.newBoard = () => {
+      function newBoard() {
         board = mt.createBoard();
         mainMap = board[0].map;
         tileList = board[0].list;
@@ -63,38 +60,52 @@
         initialSetup = board[0].initialSetup;
         player = po.createPlayer(tileList,0);
         init();
-      };
+      }
       
-      //movement
-      $scope.goLeft = () => {
+      function saveBoard() {
+        lso.saveData('board', board);
+        lso.saveData('player', player);
+      }
+      
+      function loadBoard() {
+        board = lso.getData('board');
+        player = lso.getData('player');
+        tileList = board[player.mapId].list;
+        mainMap = board[player.mapId].map;
+        mapColor = board[player.mapId].color;
+        initialSetup = board[player.mapId].initialSetup;
+        init();
+      }
+      
+      function goLeft() {
         if (mainMap[player.location[0] - 1][player.location[1]] === 1) {
           player.location = [player.location[0] - 1, player.location[1]];
           init();
         }
-      };
+      }
       
-      $scope.goUp = () => {
+      function goUp() {
         if (mainMap[player.location[0]][player.location[1] - 1] === 1) {
           player.location = [player.location[0], player.location[1] - 1];
           init();
         }
-      };
+      }
       
-      $scope.goDown = () => {
+      function goDown() {
         if (mainMap[player.location[0]][player.location[1] + 1] === 1) {
           player.location = [player.location[0], player.location[1] + 1];
           init();
         }
-      };
+      }
       
-      $scope.goRight = () => {
+      function goRight() {
         if (mainMap[player.location[0] + 1][player.location[1]] === 1) {
           player.location = [player.location[0] + 1, player.location[1]];
           init();
         }
-      };
+      }
       
-      $scope.enterGate = () => {
+      function enterGate() {
         const gateId = (mm.checkTileForGate(initialSetup, player.location)[0]);
         const newIndex = player.mapId === 0 ? gateId : 0;
         mainMap = board[newIndex].map;
@@ -103,7 +114,7 @@
         player.location = player.mapId === 0 ? initialSetup[0] : board[0].initialSetup[player.mapId];
         player.mapId = newIndex;
         init();
-      };
+      }
       
       function init() {
         $scope.mapId = player.mapId;
