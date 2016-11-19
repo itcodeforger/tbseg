@@ -1,30 +1,27 @@
 (() => {
   'use strict';
   
-  const app = angular.module('myApp.procedural',[]);
-  
-  app.constant('config', {
+  angular
+    .module('myApp.procedural',[])
+    .controller('proceduralCtrl', proceduralCtrl)
+    .constant('config', {
     boardSize: 20,
     boardResolution: 25,
     fillDegree: 2,
     startingObjects: 5
   });
   
-  app.controller('proceduralCtrl', [
+  proceduralCtrl.$inject = [
     '$scope',
-    'config',
     'graphService',
     'mapTransformations',
     'localStorageOperations',
     'mapMovement',
-    'playerObject', (
-      $scope,
-      config,
-      graphService,
-      mapTransformations,
-      localStorageOperations,
-      mapMovement,
-      playerObject) => {
+    'playerObject'
+  ];
+  
+  function proceduralCtrl($scope, graphService, mapTransformations, localStorageOperations,
+      mapMovement, playerObject){
       
       const lso = localStorageOperations;
       const mt = mapTransformations;
@@ -127,5 +124,5 @@
         $scope.gateNo = mm.checkTileForGate(initialSetup, player.location)[0];
       }
       
-    }]);
+    }
 })();
