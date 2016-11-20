@@ -22,7 +22,7 @@
         const map = createMap();
         const list = createTileList(map);
         const initialSetup = mm.gatePosition(list, i);
-        const color = 'rgba(' + mo.randomIntFromInterval(0,255) + ', ' + mo.randomIntFromInterval(0,255) + ', ' + mo.randomIntFromInterval(0,255) + ', 0.5)';
+        const color = 'rgba(' + mo.randomIntFromInterval(0,122) + ', ' + mo.randomIntFromInterval(0,122) + ', ' + mo.randomIntFromInterval(0,122) + ', 0.5)';
         board.push(new mapObject(i, config.boardSize, config.boardSize, map, list, initialSetup, color));
       }
       return board;
