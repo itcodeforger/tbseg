@@ -118,8 +118,8 @@
       graph.clearMap();
       graph.drawGrid();
       graph.drawMap(mainMap, mapColor);
-      graph.drawObject(initialSetup, 'gate');
-      graph.drawObject(player.location, 'player');
+      graph.drawObject(initialSetup, player.mapId, 'gate');
+      graph.drawObject(player.location, player.mapId, 'player');
       $scope.atTheGate = mm.checkTileForGate(initialSetup, player.location)[1];
       $scope.gateNo = mm.checkTileForGate(initialSetup, player.location)[0];
     }

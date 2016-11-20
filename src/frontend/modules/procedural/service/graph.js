@@ -43,11 +43,12 @@
       }
     }
     
-    function drawObject(position, key) {
+    function drawObject(position, mapId, key) {
+      const start = mapId === 0 ? 1 : 0;
       if (key === 'gate') {
         ctx.fillStyle = "rgba(0, 0, 0, 1)";
         ctx.font = "bold 20px Arial";
-        for (let i = 0; i < position.length; i++) {
+        for (let i = start; i < position.length; i++) {
           ctx.fillText( 'A' + i ,position[i][0] * config.boardResolution + 2 , position[i][1] * config.boardResolution + 18);
         }
       }
