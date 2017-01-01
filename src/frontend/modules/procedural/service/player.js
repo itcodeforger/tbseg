@@ -15,7 +15,8 @@
       const selectedIndex = mo.randomIntFromInterval(0, end);
       const player = {
         mapId: mapId,
-        location: tileList[selectedIndex]
+        location: tileList[selectedIndex],
+        movement: 3
       };
       return player;
     }

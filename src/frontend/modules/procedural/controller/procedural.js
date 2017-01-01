@@ -35,9 +35,12 @@
     let mapColor = board[0].color;
     let initialSetup = board[0].initialSetup;
     let player = po.createPlayer(tileList,0);
+    let movesLeft = player.movement;
     
     $scope.$on('$viewContentLoaded', () => init());
     $scope.atTheGate = false;
+    $scope.endTurnButton = false;
+    $scope.turn = 0;
     $scope.mapId = 0;
     $scope.gateNo = 0;
     $scope.saveBoard = saveBoard;
@@ -48,6 +51,7 @@
     $scope.goDown = goDown;
     $scope.goRight = goRight;
     $scope.enterGate = enterGate;
+    $scope.endTurn = endTurn;
     
     function newBoard() {
       board = mt.createBoard();
@@ -56,12 +60,16 @@
       mapColor = board[0].color;
       initialSetup = board[0].initialSetup;
       player = po.createPlayer(tileList,0);
+      movesLeft = player.movement;
+      $scope.turn = 0;
       init();
     }
     
     function saveBoard() {
       lso.saveData('board', board);
       lso.saveData('player', player);
+      lso.saveData('turn', $scope.turn);
+      lso.saveData('movesLeft', movesLeft);
     }
     
     function loadBoard() {
@@ -71,12 +79,15 @@
       mainMap = board[player.mapId].map;
       mapColor = board[player.mapId].color;
       initialSetup = board[player.mapId].initialSetup;
+      movesLeft = lso.getData('movesLeft');
+      $scope.turn = lso.getData('turn');
       init();
     }
     
     function goLeft() {
       if (mainMap[player.location[0] - 1][player.location[1]] === 1) {
         player.location = [player.location[0] - 1, player.location[1]];
+        movesLeft = movesLeft - 1;
         init();
       }
     }
@@ -84,6 +95,7 @@
     function goUp() {
       if (mainMap[player.location[0]][player.location[1] - 1] === 1) {
         player.location = [player.location[0], player.location[1] - 1];
+        movesLeft = movesLeft - 1;
         init();
       }
     }
@@ -91,6 +103,7 @@
     function goDown() {
       if (mainMap[player.location[0]][player.location[1] + 1] === 1) {
         player.location = [player.location[0], player.location[1] + 1];
+        movesLeft = movesLeft - 1;
         init();
       }
     }
@@ -98,6 +111,7 @@
     function goRight() {
       if (mainMap[player.location[0] + 1][player.location[1]] === 1) {
         player.location = [player.location[0] + 1, player.location[1]];
+        movesLeft = movesLeft - 1;
         init();
       }
     }
@@ -113,6 +127,12 @@
       init();
     }
     
+    function endTurn() {
+      movesLeft = player.movement;
+      $scope.endTurnButton = false;
+      $scope.turn  = $scope.turn + 1;
+    }
+    
     function init() {
       $scope.mapId = player.mapId;
       graph.clearMap();
@@ -122,6 +142,7 @@
       graph.drawObject(player.location, player.mapId, 'player');
       $scope.atTheGate = mm.checkTileForGate(initialSetup, player.location)[1];
       $scope.gateNo = mm.checkTileForGate(initialSetup, player.location)[0];
+      $scope.endTurnButton = movesLeft === 0;
     }
     
   }
