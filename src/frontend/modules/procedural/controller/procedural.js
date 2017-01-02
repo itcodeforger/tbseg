@@ -51,6 +51,7 @@
     $scope.goDown = goDown;
     $scope.goRight = goRight;
     $scope.enterGate = enterGate;
+    $scope.checkSurroundings = checkSurroundings;
     $scope.endTurn = endTurn;
     
     function newBoard() {
@@ -125,6 +126,10 @@
       player.location = player.mapId === 0 ? initialSetup[0] : board[0].initialSetup[player.mapId];
       player.mapId = newIndex;
       init();
+    }
+
+    function checkSurroundings() {
+      console.log(player.location);
     }
     
     function endTurn() {
