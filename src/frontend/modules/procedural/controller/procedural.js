@@ -5,10 +5,10 @@
     .module('myApp.procedural',[])
     .controller('proceduralCtrl', proceduralCtrl)
     .constant('config', {
-      boardSize: 20,
-      boardResolution: 25,
-      fillDegree: 2,
-      startingObjects: 5
+      boardSize: 10,
+      boardResolution: 50,
+      fillDegree: 1,
+      startingObjects: 10
     });
   
   proceduralCtrl.$inject = [
@@ -43,6 +43,7 @@
     $scope.turn = 0;
     $scope.mapId = 0;
     $scope.gateNo = 0;
+    $scope.level = 0;
     $scope.saveBoard = saveBoard;
     $scope.loadBoard = loadBoard;
     $scope.newBoard = newBoard;
@@ -50,9 +51,12 @@
     $scope.goUp = goUp;
     $scope.goDown = goDown;
     $scope.goRight = goRight;
-    $scope.enterGate = enterGate;
     $scope.checkSurroundings = checkSurroundings;
     $scope.endTurn = endTurn;
+    $scope.staySober = staySober;
+    $scope.showText = showText;
+    $scope.text = '';
+    $scope.textVisible = false;
     
     function newBoard() {
       board = mt.createBoard();
@@ -116,16 +120,33 @@
         init();
       }
     }
-    
-    function enterGate() {
-      const gateId = (mm.checkTileForGate(initialSetup, player.location)[0]);
-      const newIndex = player.mapId === 0 ? gateId : 0;
-      mainMap = board[newIndex].map;
-      mapColor = board[newIndex].color;
-      initialSetup = board[newIndex].initialSetup;
-      player.location = player.mapId === 0 ? initialSetup[0] : board[0].initialSetup[player.mapId];
-      player.mapId = newIndex;
+
+    function staySober() {
+      $scope.level += 1;
+      player.movement += 2;
+      movesLeft = player.movement;
       init();
+    }
+    
+    function showText() {
+      $scope.textVisible = true;
+      switch($scope.level){
+        case 0:
+          $scope.text = 'Zostawcie mnie w spokoju, liczę się tylko Ja';
+          break;
+        case 1:
+          $scope.text = 'Boje się prawdy o sobie, ale wiem że potrzebuje pomocy';
+          break;
+        case 2:
+          $scope.text = 'Moi bliscy nie chcą mojej krzywdy, to nie oni byli problemem, tylko ja';
+          break;
+        case 3:
+          $scope.text = 'Otwierając się na ludzi widzę w nich dobro, przyjaźń, miłość';
+          break;
+        case 4:
+          $scope.text = 'Ja też potrafię kochać innych';
+          break;
+      }
     }
 
     function checkSurroundings() {
@@ -142,9 +163,9 @@
       $scope.mapId = player.mapId;
       graph.clearMap();
       graph.drawGrid();
-      graph.drawMap(mainMap, mapColor);
-      graph.drawObject(initialSetup, player.mapId, 'gate');
-      graph.drawObject(player.location, player.mapId, 'player');
+      graph.drawMap(mainMap, mapColor, $scope.level);
+      graph.drawObject(initialSetup, player.mapId, 'gate', $scope.level);
+      graph.drawObject(player.location, player.mapId, 'player', $scope.level);
       $scope.atTheGate = mm.checkTileForGate(initialSetup, player.location)[1];
       $scope.gateNo = mm.checkTileForGate(initialSetup, player.location)[0];
       $scope.endTurnButton = movesLeft === 0;
