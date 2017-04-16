@@ -1,29 +1,4 @@
 /* app css stylesheet */
-.center {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.hoverbox {
-  position: absolute;
-  display: block;
-  top: 230px;
-  width: 100%;
-  cursor: pointer;
-  div {
-    width: 300px;
-    height: 100px;
-    background: white;
-    border: 2px solid black;
-    -webkit-box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.63);
-    -moz-box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.63);
-    box-shadow: 10px 10px 66px 0px rgba(0,0,0,0.63);
-    margin: auto;
-    padding: 20px;
-    font-size: 20px;
-    font-weight: bold;
-  }
-}
 
 .menu {
   list-style: none;
