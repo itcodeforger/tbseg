@@ -16,7 +16,7 @@
       const player = {
         mapId: mapId,
         location: tileList[selectedIndex],
-        movement: 1,
+        movement: 3
       };
       return player;
     }

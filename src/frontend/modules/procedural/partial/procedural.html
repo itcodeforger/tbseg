@@ -1,21 +1,33 @@
-<div class="row center">
+<div class="row">
+ <strong>Turn: {{ turn }}</strong>
+</div>
+<div class="row">
+ <strong>World: {{ mapId }}</strong>
+</div>
+<div class="row">
   <canvas id="board"></canvas>
 </div>
-<div class="row center" ng-show="!endTurnButton">
-  <button ng-click="goLeft()">Idź w lewo</button>
-  <button ng-click="goUp()">Idź do góry</button>
-  <button ng-click="goDown()">Idź na dół</button>
-  <button ng-click="goRight()">Idź w prawo</button>
+<div class="row">
+  <button ng-click="saveBoard()">save board</button>
 </div>
-<div class="row center" ng-show="atTheGate && ((mapId === 0 && gateNo != 0) || (mapId != 0))">
-  <button ng-click="showText()">Co to jest?</button>
+<div class="row">
+  <button ng-click="loadBoard()">load board</button>
 </div>
-<div class="row center" ng-show="endTurnButton">
-  <button ng-click="endTurn()">Odpocznij, teraz już nic nie zrobisz</button>
+<div class="row">
+  <button ng-click="newBoard()">Generate new board</button>
 </div>
-<div class="row center">
-  <button ng-click="staySober()" ng-if="level < 4">Podążaj drogą trzeźwości</button>
+<div class="row" ng-show="!endTurnButton">
+  <button ng-click="goLeft()">LEFT</button>
+  <button ng-click="goUp()">UP</button>
+  <button ng-click="goDown()">DOWN</button>
+  <button ng-click="goRight()">RIGHT</button>
 </div>
-<div class="row center hoverbox" ng-show="textVisible">
-  <div ng-click="textVisible = false">{{ text }}</div>
+<div class="row" ng-show="atTheGate && ((mapId === 0 && gateNo != 0) || (mapId != 0))">
+  <button ng-click="enterGate()">ENTER World: {{ gateNo }}</button>
+</div>
+<div class="row" ng-show="endTurnButton">
+  <button ng-click="endTurn()">End Turn</button>
+</div>
+<div class="row">
+  <button ng-click="checkSurroundings()">Check Surroundings</button>
 </div>
