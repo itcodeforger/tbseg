@@ -1,9 +1,11 @@
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js">
+<!--<![endif]-->
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,10 +15,41 @@
   <link rel="stylesheet" href="css/library.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
-  <ul class="menu">
-    <li><a href="#/procedural">procedural</a></li>
-  </ul>
+
+<body ng-controller="proceduralCtrl">
+  <div class="row">
+    <strong>Turn: {{ turn }}</strong>
+  </div>
+  <div class="row">
+    <strong>World: {{ mapId }}</strong>
+  </div>
+  <div class="row">
+    <canvas id="board"></canvas>
+  </div>
+  <div class="row">
+    <button ng-click="saveBoard()">save board</button>
+  </div>
+  <div class="row">
+    <button ng-click="loadBoard()">load board</button>
+  </div>
+  <div class="row">
+    <button ng-click="newBoard()">Generate new board</button>
+  </div>
+  <div class="row" ng-show="!endTurnButton">
+    <button ng-click="goLeft()">LEFT</button>
+    <button ng-click="goUp()">UP</button>
+    <button ng-click="goDown()">DOWN</button>
+    <button ng-click="goRight()">RIGHT</button>
+  </div>
+  <div class="row" ng-show="atTheGate && ((mapId === 0 && gateNo != 0) || (mapId != 0))">
+    <button ng-click="enterGate()">ENTER World: {{ gateNo }}</button>
+  </div>
+  <div class="row" ng-show="endTurnButton">
+    <button ng-click="endTurn()">End Turn</button>
+  </div>
+  <div class="row">
+    <button ng-click="checkSurroundings()">Check Surroundings</button>
+  </div>
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -27,4 +60,5 @@
   <script src="js/library.js"></script>
   <script src="js/scripts.js"></script>
 </body>
+
 </html>
